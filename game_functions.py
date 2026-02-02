@@ -62,10 +62,7 @@ def start_game(ai_settings, screen, stats, sb, ship, aliens, bullets):
     pygame.mouse.set_visible(False)
 
     # Reset the scoreboard images
-    sb.prep_score()
-    sb.prep_level()
-    sb.prep_high_score()
-    sb.prep_ships()
+    sb.prep_images()
     
     # Clear the screen of aliens and bullets
     aliens.empty()
@@ -127,13 +124,16 @@ def check_bullet_alien_collisions(ai_settings, screen, stats, sb, ship, aliens, 
 
     # If the entire fleet is destroyed, create a new fleet
     if len(aliens) == 0:
-        bullets.empty()
-        ai_settings.increase_speed()
-        create_fleet(ai_settings, screen, ship, aliens)
-        # Increase level
-        stats.level += 1
-        sb.prep_level()
+        start_new_level(ai_settings, screen, stats, sb, ship, aliens, bullets)
     return collisions
+
+def start_new_level(ai_settings, screen, stats, sb, ship, aliens, bullets):
+    bullets.empty()
+    ai_settings.increase_speed()
+    create_fleet(ai_settings, screen, ship, aliens)
+    # Increase level
+    stats.level += 1
+    sb.prep_level()
     
     
 
